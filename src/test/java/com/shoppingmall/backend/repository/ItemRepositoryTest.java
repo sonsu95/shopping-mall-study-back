@@ -86,4 +86,16 @@ class ItemRepositoryTest {
         assertEquals("테스트 상품5", item2.getItemNm(), "Item name should be '테스트 상품5'");
         assertEquals(10005, item2.getPrice(), "Item price should be 10005");
     }
+
+    @Test
+    @DisplayName("가격 LessThan 테스트")
+    public void findByPriceLessThanTest() {
+        this.createItemList();
+        List<Item> itemList = itemRepository.findByPriceLessThan(10005);
+        for (Item item : itemList) {
+            System.out.println(item.toString());
+        }
+        assertFalse(itemList.isEmpty(), "Item list should not be empty");
+        assertEquals(4, itemList.size(), "There should be exactly four items with price less than 10005");
+    }
 }
