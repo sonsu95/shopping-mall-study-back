@@ -38,7 +38,7 @@ class ItemRepositoryTest {
     public void createItemList() {
         for(int i = 1; i <= 10; i++) {
             Item item = new Item();
-            item.setItemNm("테스트상품" + i);
+            item.setItemNm("테스트 상품" + i);
             item.setPrice(10000 + i);
             item.setItemDetail("테스트 상품 상세 설명" + i);
             item.setItemSellStatus(ItemSellStatus.SELL);
@@ -53,9 +53,12 @@ class ItemRepositoryTest {
     @DisplayName("상품명 조회 테스트")
     public void findByItemNmTest() {
         this.createItemList();
-        List<Item> itemList = itemRepository.findByItemNm("테스트 상품1");
-        for (Item item : itemList) {
-            System.out.println(item.toString());
-        }
+        List<Item> itemList = itemRepository.findByItemNm("테스트 상품1"); // 생성된 상품명과 일치하도록 변경
+        assertFalse(itemList.isEmpty(), "Item list should not be empty"); // 결과가 비어있지 않은지 확인
+        assertEquals(1, itemList.size(), "There should be exactly one item with the name '테스트 상품1'");
+        Item item = itemList.getFirst();
+        assertEquals("테스트 상품1", item.getItemNm(), "Item name should be '테스트 상품1'");
+        assertEquals(10001, item.getPrice(), "Item price should be 10001");
+        System.out.println(item.toString());
     }
 }
