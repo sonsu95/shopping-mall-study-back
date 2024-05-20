@@ -9,4 +9,6 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     // NOTE: find + (엔티티 이름) + By + 변수이름
     List<Item> findByItemNm(String itemNm);
+
+    List<Item> findByItemNmOrItemDetail(String itemNm, String itemDetail);
 }

@@ -61,4 +61,29 @@ class ItemRepositoryTest {
         assertEquals(10001, item.getPrice(), "Item price should be 10001");
         System.out.println(item.toString());
     }
+
+    @Test
+    @DisplayName("상품명, 상품상세설명 or 테스트")
+    public void findByItemNmOrItemDetailTest() {
+        this.createItemList();
+        List<Item> itemList = itemRepository.findByItemNmOrItemDetail("테스트 상품1", "테스트 상품 상세 설명5");
+        assertFalse(itemList.isEmpty(), "Item list should not be empty");
+        assertEquals(2, itemList.size(), "There should be exactly two item with the '테스트 상품1' and '테스트 상품5");
+
+
+        for (Item item : itemList) {
+            System.out.println(item.toString());
+        }
+
+        // 추가 검증: 각각의 아이템 속성을 확인
+        Item item1 = itemList.stream().filter(i -> "테스트 상품1".equals(i.getItemNm())).findFirst().orElse(null);
+        assertNotNull(item1, "Item with name '테스트 상품1' should exist");
+        assertEquals("테스트 상품1", item1.getItemNm(), "Item name should be '테스트 상품1'");
+        assertEquals(10001, item1.getPrice(), "Item price should be 10001");
+
+        Item item2 = itemList.stream().filter(i -> "테스트 상품 상세 설명5".equals(i.getItemDetail())).findFirst().orElse(null);
+        assertNotNull(item2, "Item with detail '테스트 상품 상세 설명5' should exist");
+        assertEquals("테스트 상품5", item2.getItemNm(), "Item name should be '테스트 상품5'");
+        assertEquals(10005, item2.getPrice(), "Item price should be 10005");
+    }
 }
