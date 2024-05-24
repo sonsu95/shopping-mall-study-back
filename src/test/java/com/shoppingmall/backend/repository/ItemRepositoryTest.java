@@ -2,6 +2,7 @@ package com.shoppingmall.backend.repository;
 
 import com.shoppingmall.backend.constant.ItemSellStatus;
 import com.shoppingmall.backend.entity.Item;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,25 @@ class ItemRepositoryTest {
 
     @Autowired
     ItemRepository itemRepository;
+
+    @BeforeEach
+    void setUp() {
+        itemRepository.deleteAll();
+    }
+
+    public void createItemList() {
+        for(int i = 1; i <= 10; i++) {
+            Item item = new Item();
+            item.setItemNm("테스트 상품" + i);
+            item.setPrice(10000 + i);
+            item.setItemDetail("테스트 상품 상세 설명" + i);
+            item.setItemSellStatus(ItemSellStatus.SELL);
+            item.setStockNumber(100);;
+            item.setRegTime(LocalDateTime.now());
+            item.setUpdateTime(LocalDateTime.now());
+            Item savedItem = itemRepository.save(item);
+        }
+    }
 
     @Test
     @DisplayName("상품 저장 테스트")
