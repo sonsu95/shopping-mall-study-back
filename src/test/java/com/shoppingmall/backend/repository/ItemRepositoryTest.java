@@ -98,4 +98,23 @@ class ItemRepositoryTest {
         assertFalse(itemList.isEmpty(), "Item list should not be empty");
         assertEquals(4, itemList.size(), "There should be exactly four items with price less than 10005");
     }
+
+    @Test
+    @DisplayName("가격 내림차순 조회 테스트")
+    public void findByPriceLessThanOrderByPriceDesc() {
+        this.createItemList();
+        List<Item> itemList = itemRepository.findByPriceLessThanOrderByPriceDesc(10005);
+        for (Item item : itemList) {
+            System.out.println(item.toString());
+        }
+
+        assertFalse(itemList.isEmpty(), "Item list should not be empty");
+        assertEquals(4, itemList.size(), "There should be exactly four items with price less than 10005");
+
+        // 품목이 가격별로 내림차순으로 정렬되었는지 확인
+        for (int i = 0; i < itemList.size() - 1; i++) {
+            assertTrue(itemList.get(i).getPrice() >= itemList.get(i + 1).getPrice(), "Items should be sorted by price in descending order");
+        }
+    }
+
 }
