@@ -199,9 +199,10 @@ class ItemRepositoryTest {
         String itemDetail = "테스트 상품 상세 설명";
         int price = 10003;
 
-        booleanBuilder.and(item.itemDetail.like("%" + itemDetail + "%"));
-        booleanBuilder.and(item.price.gt(price));
-        booleanBuilder.and(item.itemSellStatus.eq(ItemSellStatus.SELL));
+        booleanBuilder
+                .and(item.itemDetail.like("%" + itemDetail + "%"))
+                .and(item.price.gt(price))
+                .and(item.itemSellStatus.eq(ItemSellStatus.SELL));
 
         // 쿼리 실행 및 결과 검증
         List<Item> results = (List<Item>) itemRepository.findAll(booleanBuilder);
