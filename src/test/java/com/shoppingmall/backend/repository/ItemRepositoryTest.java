@@ -1,5 +1,6 @@
 package com.shoppingmall.backend.repository;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.shoppingmall.backend.constant.ItemSellStatus;
@@ -17,6 +18,7 @@ import org.springframework.test.context.TestPropertySource;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -170,6 +172,45 @@ class ItemRepositoryTest {
 
         for (Item item : itemList) {
             System.out.println(item.toString());
+        }
+    }
+
+    public void createItemList2() {
+        for(int i=1; i<=5; i++) {
+            Item item = new Item();
+            item.setItemNm("테스트 상품" + i);
+            item.setPrice(10000 + i);
+            item.setItemSellStatus(ItemSellStatus.SELL);
+            item.setItemDetail("테스트 상품 상세 설명" + i);
+            item.setStockNumber(100);
+            item.setRegTime(LocalDateTime.now());
+            item.setUpdateTime(LocalDateTime.now());
+            itemRepository.save(item);
+        }
+    }
+
+    @Test
+    @DisplayName("상품 Querydsl 조회 테스트 2")
+    public void queryDslTest2() {
+        this.createItemList2();
+
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+        QItem item = QItem.item;
+        String itemDetail = "테스트 상품 상세 설명";
+        int price = 10003;
+
+        booleanBuilder.and(item.itemDetail.like("%" + itemDetail + "%"));
+        booleanBuilder.and(item.price.gt(price));
+        booleanBuilder.and(item.itemSellStatus.eq(ItemSellStatus.SELL));
+
+        // 쿼리 실행 및 결과 검증
+        List<Item> results = (List<Item>) itemRepository.findAll(booleanBuilder);
+        assertThat(results).isNotEmpty();
+        assertThat(results.size()).isEqualTo(2); // 가격 조건을 충족하는 상품은 "테스트 상품4", "테스트 상품5"
+        for (Item result : results) {
+            assertThat(result.getItemDetail()).contains(itemDetail);
+            assertThat(result.getPrice()).isGreaterThan(price);
+            assertThat(result.getItemSellStatus()).isEqualTo(ItemSellStatus.SELL);
         }
     }
 }

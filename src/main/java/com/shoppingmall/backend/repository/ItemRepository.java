@@ -3,11 +3,12 @@ package com.shoppingmall.backend.repository;
 import com.shoppingmall.backend.entity.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface ItemRepository extends JpaRepository<Item, Long> {
+public interface ItemRepository extends JpaRepository<Item, Long>, QuerydslPredicateExecutor<Item> {
 
     // NOTE: find + (엔티티 이름) + By + 변수이름
     List<Item> findByItemNm(String itemNm);
