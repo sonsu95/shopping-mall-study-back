@@ -20,6 +20,9 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id; // 상품 코드
 
+    @Column(nullable = false)
+    private int CategoryId; // 상품 분류 코드
+
     @Column(nullable = false, length = 50)
     private String itemNm; // 상품명
 
@@ -27,10 +30,10 @@ public class Item {
     private int price; // 가격
 
     @Column(nullable = false)
-    private int stockNumber; // 재고수량
+    private int stockCnt; // 재고수량
 
     @Lob
-    @Column(nullable = false)
+    @Column
     private String itemDetail; // 상품 상세 설명
 
     @Enumerated(EnumType.STRING)

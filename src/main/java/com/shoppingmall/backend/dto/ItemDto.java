@@ -23,7 +23,7 @@ public class ItemDto {
 
     @NotNull(message = "재고수량은 필수 입력 값입니다.")
     @PositiveOrZero(message = "재고수량은 0 이상이어야 합니다.")
-    private Integer stockNumber; // 재고수량
+    private Integer stockCnt; // 재고수량
 
     @NotBlank(message = "상품 상세 설명은 필수 입력 값입니다.")
     private String itemDetail; // 상품 상세 설명

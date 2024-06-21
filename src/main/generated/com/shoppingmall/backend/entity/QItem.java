@@ -19,6 +19,8 @@ public class QItem extends EntityPathBase<Item> {
 
     public static final QItem item = new QItem("item");
 
+    public final NumberPath<Integer> CategoryId = createNumber("CategoryId", Integer.class);
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final StringPath itemDetail = createString("itemDetail");
@@ -31,7 +33,7 @@ public class QItem extends EntityPathBase<Item> {
 
     public final DateTimePath<java.time.LocalDateTime> regTime = createDateTime("regTime", java.time.LocalDateTime.class);
 
-    public final NumberPath<Integer> stockNumber = createNumber("stockNumber", Integer.class);
+    public final NumberPath<Integer> stockCnt = createNumber("stockCnt", Integer.class);
 
     public final DateTimePath<java.time.LocalDateTime> updateTime = createDateTime("updateTime", java.time.LocalDateTime.class);
 

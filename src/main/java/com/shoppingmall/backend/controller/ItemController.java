@@ -1,6 +1,7 @@
 package com.shoppingmall.backend.controller;
 
 import com.shoppingmall.backend.dto.ItemDto;
+import com.shoppingmall.backend.dto.ItemCreateDto;
 import com.shoppingmall.backend.service.ItemService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -28,8 +29,8 @@ public class ItemController {
     }
 
     @PostMapping("/api/item/create")
-    public ResponseEntity<ItemDto> createItem(@Valid @RequestBody ItemDto itemDto) {
-        ItemDto createdItem = itemService.createItem(itemDto);
+    public ResponseEntity<ItemDto> createItem(@Valid @RequestBody ItemCreateDto itemCreateDto) {
+        ItemDto createdItem = itemService.createItem(itemCreateDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdItem);
     }
 }
